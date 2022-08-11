@@ -8,7 +8,8 @@
     <fragment
         android:id="@+id/fragment_products"
         android:name="com.example.assignment.views.fragments.ProductsFragment"
-        tools:layout="@layout/fragment_products">
+        tools:layout="@layout/fragment_products"
+        android:label="@string/products_and_services">
 
         <action
             android:id="@+id/frag_products_to_add_products"
@@ -19,6 +20,7 @@
     <fragment
         android:id="@+id/fragment_add_product"
         android:name="com.example.assignment.views.fragments.AddProductFragment"
-        tools:layout="@layout/fragment_add_product" />
+        tools:layout="@layout/fragment_add_product"
+        android:label="@string/add_product"/>
 
 </navigation>

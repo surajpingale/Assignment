@@ -3,6 +3,7 @@
 
     <!--  Products Fragment  -->
     <string name="product_image">Product Image</string>
+    <string name="products_and_services">Products &amp; Services</string>
     <string name="msg_error">Something Wrong</string>
     <string name="add_new_product">New Product</string>
     <string name="tax">Tax : %1$s</string>
