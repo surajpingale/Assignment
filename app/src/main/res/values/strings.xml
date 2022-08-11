@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Assignment</string>
+
+    <!--  Products Fragment  -->
+    <string name="product_image">Product Image</string>
+    <string name="msg_error">Something Wrong</string>
+    <string name="add_new_product">New Product</string>
+    <string name="tax">Tax : %1$s</string>
+    <string name="rupee">₹%1$s</string>
+
+
+
+    <!-- Add Product Fragment  -->
+    <string name="type">Type</string>
+    <string name="product">Product</string>
+    <string name="service">Service</string>
+    <string name="product_name">Product Name*</string>
+    <string name="selling_price">Selling Price</string>
+    <string name="tax_rate">Tax Rate %</string>
+    <string name="product_images">Product Images</string>
+    <string name="new_images">New Image</string>
+    <string name="add_product">Add Product</string>
+    <string name="product_images_terms">Product images must be PNG or JPEG, recommended 1024 px by 1024 px or 1:1 aspect ratio.</string>
+    <string name="add_image">Add Image</string>
+
+
+</resources>
