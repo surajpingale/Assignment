@@ -1,5 +1,6 @@
 package com.example.assignment.model.dataclass
 
+
 data class AddProduct(
     var image: String = "",
     var price: Double = 0.0,

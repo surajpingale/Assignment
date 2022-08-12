@@ -1,12 +1,9 @@
 package com.example.assignment.di
 
 import com.example.assignment.model.remote.ApiInterface
-import com.example.assignment.model.repository.ProductRepository
 import com.example.assignment.utils.Constant
-import com.example.assignment.viewmodel.ProductViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -177,6 +177,4 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

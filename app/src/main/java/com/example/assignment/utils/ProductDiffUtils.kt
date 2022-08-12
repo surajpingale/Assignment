@@ -18,15 +18,10 @@ class ProductDiffUtils(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].productId == newList[newItemPosition].productId
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return when {
-            oldList[oldItemPosition].productId != newList[newItemPosition].productId -> {
-                false
-            }
-            else -> true
-        }
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 }

@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.assignment.model.dataclass.AddProduct
 import com.example.assignment.model.dataclass.AddProductResponse
 import com.example.assignment.model.dataclass.Product
 import com.example.assignment.model.repository.ProductRepository
@@ -14,7 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class ProductViewModel constructor(private val repository: ProductRepository) : ViewModel() {
+class ProductViewModel constructor(private val repository: ProductRepository
+) : ViewModel() {
 
     // get products list response mutable data
     private var _products = MutableLiveData<Response<List<Product>>>()
@@ -39,10 +39,6 @@ class ProductViewModel constructor(private val repository: ProductRepository) : 
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getProducts()
             if (result.isSuccessful && result.body() != null) {
-                var i = 0
-                result.body()!!.forEach { product ->
-                    product.productId = i++
-                }
                 _products.postValue(Response.Success(result.body()!!))
             } else {
                 _products.postValue(Response.Error(result.errorBody().toString()))
