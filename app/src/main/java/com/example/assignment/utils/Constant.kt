@@ -25,7 +25,5 @@ object Constant {
 
     // file type
     const val TEXT_PLAIN = "text/plain"
-    const val FILE_IMAGE = "image"
-
-
+    const val FILE_IMAGE = "files[]"
 }

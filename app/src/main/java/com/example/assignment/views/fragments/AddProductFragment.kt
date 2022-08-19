@@ -1,18 +1,16 @@
 package com.example.assignment.views.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.assignment.R
 import com.example.assignment.databinding.FragmentAddProductBinding
 import com.example.assignment.di.ProductComponent
 import com.example.assignment.utils.Constant
@@ -20,6 +18,7 @@ import com.example.assignment.utils.Permission
 import com.example.assignment.utils.Response
 import com.example.assignment.views.adapter.ProductImagesAdapter
 import java.io.File
+import java.io.FileOutputStream
 
 
 class AddProductFragment : Fragment(), View.OnClickListener {
@@ -39,27 +38,28 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 
     private lateinit var hashMap: HashMap<String, File>
 
+    private var fileName = ""
+
+    private lateinit var imageUri: Uri
+
     // for loading image from gallery
     private val imagePicker = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
 
         if (uri != null) {
+            imageUri = uri
+
             // for knowing extension of image
             val imageExtension = MimeTypeMap.getSingleton()
                 .getExtensionFromMimeType(requireContext().contentResolver.getType(uri))
 
-            var fileName = ""
-            Log.d("product", "extention - $imageExtension")
-
+            // This will give image file name from uri
             uri.let { returnUri ->
-                Log.d("product", "returnuri - $returnUri")
                 requireContext().contentResolver.query(
                     returnUri, null, null,
                     null, null
                 )
-
-
             }?.let { cursor ->
                 val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 cursor.moveToFirst()
@@ -148,16 +148,16 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         val sellingPrice = binding.included.etSellingPrice.text.toString().trim { it <= ' ' }
         val taxRate = binding.included.etTaxRate.text.toString().trim { it <= ' ' }
 
-        val file = File(requireActivity().cacheDir,"insta.png")
+        val file = File(requireActivity().cacheDir, fileName)
         file.createNewFile()
-        file.outputStream().use {
-            requireContext().assets.open("insta.png").copyTo(it)
-        }
+        val fileOutputStream = FileOutputStream(file)
+        val byteArray = viewModel.getByteArray(requireContext(), imageUri)
+        fileOutputStream.write(byteArray)
+        fileOutputStream.close()
 
         hashMap[file.name] = file
 
-        Log.d("product", "extention - ${file.exists()} ${file.path}")
-        viewModel.addProductResponse2(
+        viewModel.addProductResponse(
             productName, productType,
             sellingPrice.toDouble(), taxRate.toDouble(),
             hashMap
@@ -213,4 +213,5 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         super.onDestroyView()
         _binding = null
     }
+
 }

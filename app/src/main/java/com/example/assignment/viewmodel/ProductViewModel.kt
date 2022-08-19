@@ -1,5 +1,7 @@
 package com.example.assignment.viewmodel
 
+import android.content.Context
+import android.net.Uri
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -12,6 +14,7 @@ import com.example.assignment.model.repository.ProductRepository
 import com.example.assignment.utils.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 
@@ -54,37 +57,12 @@ class ProductViewModel constructor(
      */
     fun addProductResponse(
         productName: String, productType: String, price: Double,
-        taxRate: Double
-    ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.addProduct(
-                productName,
-                productType, price, taxRate, ""
-            )
-            if (result.code() == 200 && result.body() != null) {
-                _addProduct.postValue(Response.Success(result.body()!!))
-            } else {
-                _addProduct.postValue(Response.Error(result.errorBody().toString()))
-            }
-        }
-    }
-
-    fun addProductResponse2(
-        productName: String, productType: String, price: Double,
         taxRate: Double,
         imagesList: HashMap<String, File>
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            val fileList: ArrayList<File> = ArrayList()
-//            for (i in imagesList)
-//            {
-//                Log.d("product", "before convert - ${i}")
-//                val file = File(i)
-//                fileList.add(file)
-//                Log.d("product", "file name - ${file.name}")
-//            }
             try {
-                val result = repository.addProduct2(
+                val result = repository.addProduct(
                     productName,
                     productType, price, taxRate, imagesList
                 )
@@ -113,6 +91,26 @@ class ProductViewModel constructor(
             result = Pair(false, "Something empty")
         }
         return result
+    }
+
+
+    /**
+     * fun for getting byte[]
+     */
+    fun getByteArray(context: Context, imageUri: Uri): ByteArray {
+        val inputStream = context.contentResolver.openInputStream(imageUri)
+        val byteBuffer = ByteArrayOutputStream()
+        val bufferSize = 1024
+        val buffer = ByteArray(bufferSize)
+
+        var len = 0
+        if (inputStream != null) {
+            while (inputStream.read(buffer).also { len = it } != -1) {
+                byteBuffer.write(buffer, 0, len)
+            }
+        }
+        inputStream?.close()
+        return byteBuffer.toByteArray()
     }
 
 }

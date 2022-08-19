@@ -16,27 +16,7 @@ interface ApiInterface {
     @GET(Constant.GET_ALL_PRODUCTS_END_POINT)
     suspend fun getAllProducts(): Response<List<Product>>
 
-    // for post product to api body type - form-data
-    @FormUrlEncoded
-    @POST(Constant.POST_PRODUCT_END_POINT)
-    suspend fun addProduct(
-        @Field(Constant.PRODUCT_NAME) productName: String,
-        @Field(Constant.PRODUCT_TYPE) productType: String,
-        @Field(Constant.PRODUCT_PRICE) productPrice: Double,
-        @Field(Constant.PRODUCT_TAX) productTax: Double,
-        @Field(Constant.PRODUCT_IMAGES) productImages: String,
-    ): Response<AddProductResponse>
-
-    @FormUrlEncoded
-    @POST(Constant.POST_PRODUCT_END_POINT)
-    suspend fun addProduct2(
-        @Field(Constant.PRODUCT_NAME) productName: String,
-        @Field(Constant.PRODUCT_TYPE) productType: String,
-        @Field(Constant.PRODUCT_PRICE) productPrice: Double,
-        @Field(Constant.PRODUCT_TAX) productTax: Double,
-        @Field(Constant.PRODUCT_IMAGES) productImages: Array<File>,
-    ): Response<AddProductResponse>
-
+    // for post product to api body type - form-data with image
     @Multipart
     @POST(Constant.POST_PRODUCT_END_POINT)
     suspend fun addProductMultipart(

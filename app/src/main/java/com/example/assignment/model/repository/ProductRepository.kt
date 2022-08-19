@@ -26,13 +26,6 @@ class ProductRepository constructor(private val apiInterface: ApiInterface) {
      */
     suspend fun addProduct(
         productName: String, productType: String, price: Double,
-        taxRate: Double, productImage: String
-    ): Response<AddProductResponse> {
-        return apiInterface.addProduct(productName, productType, price, taxRate, productImage)
-    }
-
-    suspend fun addProduct2(
-        productName: String, productType: String, price: Double,
         taxRate: Double, imagesList: HashMap<String, File>
     ): Response<AddProductResponse> {
         val name = MultipartBody.Part.createFormData(Constant.TEXT_PLAIN, productName).body
@@ -43,38 +36,21 @@ class ProductRepository constructor(private val apiInterface: ApiInterface) {
         val multipartFileList = ArrayList<MultipartBody.Part>()
 
         for ((key, value) in imagesList) {
-            val file = File(value.toUri().path!!)
-//            val filename =
-
-            Log.d("product", "file name - $key - $value")
-
             val fileToApi = MultipartBody.Part.createFormData(
-                "files[]", value.name,
+                Constant.FILE_IMAGE, value.name,
                 value.asRequestBody()
             )
-
             multipartFileList.add(fileToApi)
-        }
-
-
-        val fileList = ArrayList<File>()
-
-        for ((key, value) in imagesList) {
-            fileList.add(value)
         }
 
         val partMap = HashMap<String, RequestBody>()
         partMap[Constant.PRODUCT_NAME] = name
-        partMap[Constant.PRODUCT_TYPE] =type
+        partMap[Constant.PRODUCT_TYPE] = type
         partMap[Constant.PRODUCT_PRICE] = priceM
         partMap[Constant.PRODUCT_TAX] = tax
-//        partMap[Constant.PRODUCT_IMAGES] = fileList.toTypedArray()
-
 
         return apiInterface.addProductMultipart(
             partMap, multipartFileList[0]
         )
     }
-
-
 }
