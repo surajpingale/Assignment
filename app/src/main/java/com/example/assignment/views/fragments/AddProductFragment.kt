@@ -36,8 +36,10 @@ class AddProductFragment : Fragment(), View.OnClickListener {
     // product images list
     private lateinit var imagesList: ArrayList<String>
 
+    // hashmap for @key = file name and @value = file
     private lateinit var hashMap: HashMap<String, File>
 
+    // file name from content resolver
     private var fileName = ""
 
     private lateinit var imageUri: Uri

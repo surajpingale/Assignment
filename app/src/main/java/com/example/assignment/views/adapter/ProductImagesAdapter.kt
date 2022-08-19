@@ -2,19 +2,12 @@ package com.example.assignment.views.adapter
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.net.toFile
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.assignment.databinding.ItemAddProductImageBinding
-import java.io.File
-import java.net.URI
-import java.nio.file.Path
-import java.nio.file.Paths
 
 
 class ProductImagesAdapter(
@@ -33,15 +26,8 @@ class ProductImagesAdapter(
     override fun onBindViewHolder(holder: ImagesViewHolder, position: Int) {
         val string = imageList[position]
 
-        val substring = string.substring(9)
-        val filePath = "content:/$substring"
-
-        val file = File(filePath)
-
-        Log.d("product","sub - ${Paths.get(filePath).toFile().isFile}\n - ${file.absolutePath}")
-
         Glide.with(context)
-            .load(filePath)
+            .load(string)
             .into(holder.binding.ivAddImage)
 
     }
