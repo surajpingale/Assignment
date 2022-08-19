@@ -17,10 +17,15 @@ object Constant {
     const val PRODUCT_TYPE = "product_type"
     const val PRODUCT_PRICE = "price"
     const val PRODUCT_TAX = "tax"
-    const val PRODUCT_IMAGES = "files"
+    const val PRODUCT_IMAGES = "files[]"
 
     // add product image extension
     const val IMAGE_JPEG = "jpeg"
     const val IMAGE_PNG = "png"
+
+    // file type
+    const val TEXT_PLAIN = "text/plain"
+    const val FILE_IMAGE = "image"
+
 
 }
